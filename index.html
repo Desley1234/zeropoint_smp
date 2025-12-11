@@ -65,6 +65,8 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 section {
@@ -226,6 +228,14 @@ a.button-link:hover {
   box-shadow: 0 6px 15px #ffeb3b80;
 }
 
+/* TikTok fixed onderaan */
+#tiktok-section {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  width: 150px;
+}
+
 @media(max-width:480px){
     main, section { padding:15px 20px; }
     header img { width:90px; }
@@ -233,6 +243,7 @@ a.button-link:hover {
     li { font-size:0.65rem; }
     .button-container { flex-direction:column; }
     button.copy, a.button-link { width:100%; font-size:0.75rem; padding:12px; }
+    #tiktok-section { position: static; width: 100%; margin-top: 20px; }
 }
 </style>
 </head>
@@ -339,6 +350,14 @@ a.button-link:hover {
       <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
     </div>
   </section>
+
+  <!-- TikTok sectie -->
+  <div id="tiktok-section" class="info-box">
+    <h2 style="font-size:1rem; margin-bottom:5px;">📱 Volg ons op TikTok</h2>
+    <div class="button-container">
+      <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link" style="padding:8px 8px; font-size:0.75rem;">Bekijk TikTok @pannekoek17</a>
+    </div>
+  </div>
 </main>
 
 <footer>
@@ -363,30 +382,26 @@ document.getElementById('copyIpBtnInfo').addEventListener('click', () => {
 
 // Server status ophalen
 async function updateServerStatus() {
+  const statusText = document.getElementById('statusText');
+  const playersCount = document.getElementById('playersCount');
+  const playersList = document.getElementById('playersList');
+
   try {
     const res = await fetch('https://api.mcstatus.io/v2/status/java/Mikeeeee1-9Mba.aternos.me');
     const data = await res.json();
-    const statusText = document.getElementById('statusText');
-    const playersCount = document.getElementById('playersCount');
-    const playersList = document.getElementById('playersList');
 
-    const isOnline = data.version.name_clean !== '● Offline';
+    const isOnline = data.online === true;
+
     statusText.textContent = isOnline ? 'Online ✅' : 'Offline ❌';
-    playersCount.textContent = `${data.players.online}/${data.players.max}`;
+    playersCount.textContent = isOnline ? `${data.players.online}/${data.players.max}` : '0/0';
 
+    // Spelerslijst leegmaken
     playersList.innerHTML = '';
-    if (data.players.online > 0 && data.players.list) {
-      data.players.list.forEach(player => {
-        const img = document.createElement('img');
-        img.src = `https://crafatar.com/avatars/${player.uuid}?size=32`;
-        img.alt = player.name;
-        playersList.appendChild(img);
-      });
-    }
   } catch (err) {
     console.error(err);
-    document.getElementById('statusText').textContent = 'Fout bij laden';
-    document.getElementById('playersCount').textContent = '0/0';
+    statusText.textContent = 'Fout bij laden';
+    playersCount.textContent = '0/0';
+    playersList.innerHTML = '';
   }
 }
 

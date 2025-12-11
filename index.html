@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZeroPoint SMP - Website</title>
+<title>ZeroPoint SMP</title>
+<link rel="icon" href="images/Zeropoint.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -122,27 +123,6 @@ li.wrong::before {
   top: 0;
 }
 
-.owners,
-.management {
-  background: #37474f;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  font-size: 0.8rem;
-  text-align: center;
-  box-shadow: inset 0 0 10px #0008;
-}
-.owners strong,
-.management strong {
-  color: #ffeb3b;
-  letter-spacing: 1.5px;
-}
-.discord-user {
-  cursor: pointer;
-  text-decoration: underline;
-  color: #00ccff;
-}
-
 .button-container {
   display: flex;
   gap: 15px;
@@ -169,39 +149,6 @@ a.button-link:hover {
   background: #e64a19;
 }
 
-.photo-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.photo-gallery img {
-  width: 100%;
-  max-width: 200px;  /* Verkleind om beter te passen */
-  border: 4px solid #ffc107;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px #0008;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-}
-
-.photo-gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px #ffeb3b80;
-}
-
-@media(max-width:480px){
-    main, section { padding:15px 20px; }
-    header img { width:90px; }
-    h2 { font-size:0.9rem; }
-    li { font-size:0.65rem; }
-    .button-container { flex-direction:column; }
-    button.copy, a.button-link { width:100%; font-size:0.75rem; padding:12px; }
-}
-
-/* Nieuwe stijlen voor info-box */
 .info-box {
   background: #455a64;
   border-radius: 12px;
@@ -231,6 +178,62 @@ a.button-link:hover {
   color: #ffeb3b;
 }
 
+.players-list img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.owners, .management {
+  background: #37474f;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 0.8rem;
+  text-align: center;
+  box-shadow: inset 0 0 10px #0008;
+}
+.owners strong, .management strong {
+  color: #ffeb3b;
+  letter-spacing: 1.5px;
+}
+.discord-user {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #00ccff;
+}
+
+.photo-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.photo-gallery img {
+  width: 100%;
+  max-width: 200px;
+  border: 4px solid #ffc107;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px #0008;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.photo-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px #ffeb3b80;
+}
+
+@media(max-width:480px){
+    main, section { padding:15px 20px; }
+    header img { width:90px; }
+    h2 { font-size:0.9rem; }
+    li { font-size:0.65rem; }
+    .button-container { flex-direction:column; }
+    button.copy, a.button-link { width:100%; font-size:0.75rem; padding:12px; }
+}
 </style>
 </head>
 <body>
@@ -241,78 +244,88 @@ a.button-link:hover {
 </header>
 
 <nav>
-  <button onclick="showSection('regels')">Regels</button>
+  <button onclick="showSection('home')">Home</button>
   <button onclick="showSection('informatie')">Informatie</button>
   <button onclick="showSection('media')">Media</button>
 </nav>
 
 <main>
-  <section id="regels" class="active">
-    <img src="images/Zeropoint.png" class="section-logo" />
-    <h2>Algemeen Gedrag</h2>
+  <!-- Home sectie: regels + serverstatus -->
+  <section id="home" class="active">
+    <h2>Home</h2>
+
+    <!-- Server status -->
+    <div class="info-box" id="serverStatus">
+      <p>Status: <span id="statusText">Laden...</span></p>
+      <p>Spelers: <span id="playersCount">0/0</span></p>
+      <div id="playersList" class="players-list"></div>
+      <div class="button-container">
+        <button class="copy" id="copyIpBtn">Copy server IP</button>
+        <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+      </div>
+    </div>
+
+    <!-- Regels -->
+    <h2>📜 Onze Server Regels</h2>
+
+    <h3>Algemeen Gedrag</h3>
     <ul>
       <li class="correct">Respecteer alle spelers</li>
       <li class="wrong">Geen racisme, discriminatie, bedreigingen of toxisch gedrag.</li>
       <li class="wrong">Geen spam, reclame of promotie van andere servers.</li>
-      <li class="wrong">Je mag niet bases opblazen</li>
     </ul>
 
-    <h2>PvP Regels</h2>
+    <h3>PvP Regels</h3>
     <ul>
-      <li class="correct">PvP is toegestaan, alleen denk eraan dat je mensen niet killt zonder gear.</li>
+      <li class="correct">PvP is toegestaan alleen denk er wel aan dat je niet mensen gaat killen zonder gear.</li>
       <li class="wrong">Geen combat logging (uitloggen tijdens gevecht).</li>
-      <li class="wrong">Geen spawn-killing of langdurig campen bij vijandelijke base.</li>
+      <li class="wrong">Geen spawn-killing of langdurig campen bij vijandelijke base</li>
       <li class="wrong">Bug-abuse om bases binnen te dringen is verboden.</li>
       <li class="wrong">X-ray tunnels, illegal traps of block exploits zijn niet toegestaan.</li>
     </ul>
 
-    <h2>Modding & Cheats</h2>
+    <h3>🔧 Modding & Cheats</h3>
     <ul>
       <li class="wrong">Geen hacked clients (KillAura, Fly, X-ray, ESP, etc.).</li>
       <li class="wrong">Geen macro’s, autoclickers of unfair advantage mods.</li>
       <li class="correct">Optifine, shaders en mini-maps zonder radar, cave mode zijn toegestaan.</li>
       <li class="wrong">Bugs of glitches misbruiken = Warn.</li>
+      <li class="wrong">Bases slopen mag niet</li>
     </ul>
 
-    <h2>Eigenaren & Management</h2>
+    <!-- Eigenaren & Management onderaan -->
     <div class="owners">
       <strong>Eigenaren:</strong>
-      <span class="discord-user" data-tag="desley6573">Desley</span>,
-      <span class="discord-user" data-tag="mikenl0497">Mike</span>
+      <a href="https://discord.com/users/desley6573" target="_blank" class="discord-user">Desley</a>,
+      <a href="https://discord.com/users/mikenl0497" target="_blank" class="discord-user">Mike</a>
     </div>
     <div class="management">
       <strong>Management:</strong>
-      <span class="discord-user" data-tag="noxenbence">Bence</span>
-    </div>
-
-    <h2>Server Connectie</h2>
-    <div class="button-container">
-      <button class="copy" id="copyIpBtn1">Copy server IP</button>
-      <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+      <a href="https://discord.com/users/noxenbence" target="_blank" class="discord-user">Bence</a>
     </div>
   </section>
 
+  <!-- Informatie sectie -->
   <section id="informatie">
     <h2>🎮 Informatie 🎮</h2>
     <div class="info-box">
       <ul>
         <li>❤️ Je start met <strong>5 levens</strong> — zorg dat je ze niet verliest!</li>
-        <li>🏆 <strong>Elke week</strong> organiseren we een spannend <em>1v1-toernooi</em> waar je kunt laten zien wat je kan.</li>
-        <li>🎉 Win je een event? Dan krijg je een leven erbij of worden al je levens teruggezet — het hangt af van het type event en het aantal spelers.</li>
-        <li>🔥 Onze top-record: <strong>10 spelers</strong> tegelijk online — doe mee en zet je naam in de geschiedenis!</li>
-        <li>🎁 Bij aankomst ontvang je een speciaal <strong>welkoms-kitje</strong> vol bijzondere spullen.</li>
-        <li>⚔️ Kies je kit: <strong>PvP pack</strong> om direct te knokken of <strong>Build pack</strong> voor een prachtig huis.</li>
+        <li>🏆 <strong>Elke week</strong> organiseren we een spannend <em>1v1-toernooi</em>.</li>
+        <li>🎉 Win je een event? Dan krijg je een leven erbij of worden al je levens teruggezet.</li>
+        <li>🔥 Onze top-record: <strong>10 spelers</strong> tegelijk online.</li>
+        <li>🎁 Bij aankomst ontvang je een speciaal <strong>welkoms-kitje</strong>.</li>
+        <li>⚔️ Kies je kit: <strong>PvP pack</strong> of <strong>Build pack</strong>.</li>
         <li>🛡️ We hebben een custom <strong>arena</strong> speciaal ontworpen voor epische fights.</li>
       </ul>
-    </div>
-
-    <h2>Server Connectie</h2>
-    <div class="button-container">
-      <button class="copy" id="copyIpBtn2">Copy server IP</button>
-      <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+      <div class="button-container">
+        <button class="copy" id="copyIpBtnInfo">Copy server IP</button>
+        <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+      </div>
     </div>
   </section>
 
+  <!-- Media sectie -->
   <section id="media">
     <h2>📸 Foto's & Video's 📹</h2>
     <p>Bekijk onze Minecraft-clip op Medal:</p>
@@ -325,12 +338,6 @@ a.button-link:hover {
       <img src="images/boys.png" alt="ZeroPoint SMP Spelers" />
       <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
     </div>
-
-    <h2>Server Connectie</h2>
-    <div class="button-container">
-      <button class="copy" id="copyIpBtn3">Copy server IP</button>
-      <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
-    </div>
   </section>
 </main>
 
@@ -341,28 +348,56 @@ a.button-link:hover {
 <script>
 // Secties wisselen
 function showSection(id) {
-  document.querySelectorAll('main section').forEach((sec) => sec.classList.remove('active'));
+  document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// Server IP kopiëren (3 knoppen, zelfde IP)
+// Server IP kopiëren
 const serverIp = 'Mikeeeee1-9Mba.aternos.me';
-
-document.getElementById('copyIpBtn1').addEventListener('click', () => {
+document.getElementById('copyIpBtn').addEventListener('click', () => {
   navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
 });
-document.getElementById('copyIpBtn2').addEventListener('click', () => {
-  navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
-});
-document.getElementById('copyIpBtn3').addEventListener('click', () => {
+document.getElementById('copyIpBtnInfo').addEventListener('click', () => {
   navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
 });
 
-// Discord-tags kopiëren
-document.querySelectorAll('.discord-user').forEach((el) => {
+// Server status ophalen
+async function updateServerStatus() {
+  try {
+    const res = await fetch('https://api.mcstatus.io/v2/status/java/Mikeeeee1-9Mba.aternos.me');
+    const data = await res.json();
+    const statusText = document.getElementById('statusText');
+    const playersCount = document.getElementById('playersCount');
+    const playersList = document.getElementById('playersList');
+
+    const isOnline = data.version.name_clean !== '● Offline';
+    statusText.textContent = isOnline ? 'Online ✅' : 'Offline ❌';
+    playersCount.textContent = `${data.players.online}/${data.players.max}`;
+
+    playersList.innerHTML = '';
+    if (data.players.online > 0 && data.players.list) {
+      data.players.list.forEach(player => {
+        const img = document.createElement('img');
+        img.src = `https://crafatar.com/avatars/${player.uuid}?size=32`;
+        img.alt = player.name;
+        playersList.appendChild(img);
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById('statusText').textContent = 'Fout bij laden';
+    document.getElementById('playersCount').textContent = '0/0';
+  }
+}
+
+updateServerStatus();
+setInterval(updateServerStatus, 30000);
+
+// Discord-tag kopiëren
+document.querySelectorAll('.discord-user').forEach(el => {
   el.addEventListener('click', () => {
-    const tag = el.getAttribute('data-tag');
-    navigator.clipboard.writeText(tag).then(() => alert(`Discord-tag "${tag}" is gekopieerd naar je klembord!`));
+    const tag = el.textContent;
+    navigator.clipboard.writeText(tag).then(() => alert(`Discord-tag "${tag}" is gekopieerd!`));
   });
 });
 </script>

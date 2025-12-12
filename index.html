@@ -15,7 +15,6 @@ body {
   color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-height: 100vh;
 }
 
@@ -45,6 +44,7 @@ header h1 {
 nav {
   margin: 20px;
   display: flex;
+  justify-content: center;
   gap: 15px;
 }
 nav button {
@@ -67,6 +67,7 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 120px; /* ruimte voor TikTok-balk */
 }
 
 section {
@@ -77,6 +78,7 @@ section {
   border-radius: 12px;
   box-shadow: 0 0 20px #000a;
   margin-bottom: 30px;
+  text-align: center;
 }
 section.active {
   display: block;
@@ -159,6 +161,7 @@ a.button-link:hover {
   font-size: 0.85rem;
   line-height: 1.5;
   margin-bottom: 20px;
+  text-align: left;
 }
 .info-box ul {
   list-style: none;
@@ -180,12 +183,19 @@ a.button-link:hover {
   color: #ffeb3b;
 }
 
-.players-list img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 5px;
-  vertical-align: middle;
+.players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  text-align: center;
+}
+.players-list span {
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  padding: 2px 6px;
+  color: #fff; /* volledig wit */
+  background: none; /* geen gele achtergrond */
 }
 
 .owners, .management {
@@ -228,12 +238,31 @@ a.button-link:hover {
   box-shadow: 0 6px 15px #ffeb3b80;
 }
 
-/* TikTok fixed onderaan */
+/* TikTok-balk onderaan */
 #tiktok-section {
   position: fixed;
-  bottom: 5px;
-  right: 5px;
-  width: 150px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 5px;
+}
+
+#tiktok-section .title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+#tiktok-section .links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @media(max-width:480px){
@@ -243,7 +272,6 @@ a.button-link:hover {
     li { font-size:0.65rem; }
     .button-container { flex-direction:column; }
     button.copy, a.button-link { width:100%; font-size:0.75rem; padding:12px; }
-    #tiktok-section { position: static; width: 100%; margin-top: 20px; }
 }
 </style>
 </head>
@@ -261,14 +289,12 @@ a.button-link:hover {
 </nav>
 
 <main>
-  <!-- Home sectie: regels + serverstatus -->
   <section id="home" class="active">
     <h2>Home</h2>
 
-    <!-- Server status -->
     <div class="info-box" id="serverStatus">
       <p>Status: <span id="statusText">Laden...</span></p>
-      <p>Spelers: <span id="playersCount">0/0</span></p>
+      <p>Spelers: <span id="playersCount">0/20</span></p>
       <div id="playersList" class="players-list"></div>
       <div class="button-container">
         <button class="copy" id="copyIpBtn">Copy server IP</button>
@@ -276,9 +302,7 @@ a.button-link:hover {
       </div>
     </div>
 
-    <!-- Regels -->
     <h2>📜 Onze Server Regels</h2>
-
     <h3>Algemeen Gedrag</h3>
     <ul>
       <li class="correct">Respecteer alle spelers</li>
@@ -304,7 +328,6 @@ a.button-link:hover {
       <li class="wrong">Bases slopen mag niet</li>
     </ul>
 
-    <!-- Eigenaren & Management onderaan -->
     <div class="owners">
       <strong>Eigenaren:</strong>
       <a href="https://discord.com/users/desley6573" target="_blank" class="discord-user">Desley</a>,
@@ -316,7 +339,6 @@ a.button-link:hover {
     </div>
   </section>
 
-  <!-- Informatie sectie -->
   <section id="informatie">
     <h2>🎮 Informatie 🎮</h2>
     <div class="info-box">
@@ -336,7 +358,6 @@ a.button-link:hover {
     </div>
   </section>
 
-  <!-- Media sectie -->
   <section id="media">
     <h2>📸 Foto's & Video's 📹</h2>
     <p>Bekijk onze Minecraft-clip op Medal:</p>
@@ -350,15 +371,17 @@ a.button-link:hover {
       <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
     </div>
   </section>
-
-  <!-- TikTok sectie -->
-  <div id="tiktok-section" class="info-box">
-    <h2 style="font-size:1rem; margin-bottom:5px;">📱 Volg ons op TikTok</h2>
-    <div class="button-container">
-      <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link" style="padding:8px 8px; font-size:0.75rem;">Bekijk TikTok @pannekoek17</a>
-    </div>
-  </div>
 </main>
+
+<!-- TikTok sectie -->
+<div id="tiktok-section">
+  <div class="title">Volg ons op TikTok</div>
+  <div class="links">
+    <a href="https://www.tiktok.com/@pannenkoek17" target="_blank" class="button-link">Desley (@pannenkoek17)</a>
+    <a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
+    <a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
+  </div>
+</div>
 
 <footer>
   <p>&copy; 2025 ZeroPoint SMP. Alle rechten voorbehouden.</p>
@@ -380,7 +403,7 @@ document.getElementById('copyIpBtnInfo').addEventListener('click', () => {
   navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
 });
 
-// Server status ophalen
+// Server status ophalen en spelers tonen
 async function updateServerStatus() {
   const statusText = document.getElementById('statusText');
   const playersCount = document.getElementById('playersCount');
@@ -390,18 +413,36 @@ async function updateServerStatus() {
     const res = await fetch('https://api.mcstatus.io/v2/status/java/Mikeeeee1-9Mba.aternos.me');
     const data = await res.json();
 
-    const isOnline = data.online === true;
+    const motd = data.motd.clean;
+    const isOnline = !motd.toLowerCase().includes('offline');
 
     statusText.textContent = isOnline ? 'Online ✅' : 'Offline ❌';
-    playersCount.textContent = isOnline ? `${data.players.online}/${data.players.max}` : '0/0';
+    statusText.style.color = isOnline ? 'lime' : 'red';
 
-    // Spelerslijst leegmaken
-    playersList.innerHTML = '';
+    if (isOnline) {
+      const onlinePlayers = data.players.list || [];
+      playersCount.textContent = `${onlinePlayers.length}/${data.players.max}`;
+
+      if (onlinePlayers.length > 0) {
+        playersList.innerHTML = '';
+        onlinePlayers.forEach(player => {
+          const span = document.createElement('span');
+          span.textContent = player.name;
+          playersList.appendChild(span);
+        });
+      } else {
+        playersList.innerHTML = '<span>Geen spelers online</span>';
+      }
+    } else {
+      playersCount.textContent = `0/${data.players.max}`;
+      playersList.innerHTML = '<span>Geen spelers online</span>';
+    }
   } catch (err) {
     console.error(err);
     statusText.textContent = 'Fout bij laden';
+    statusText.style.color = 'red';
     playersCount.textContent = '0/0';
-    playersList.innerHTML = '';
+    playersList.innerHTML = '<span>Geen spelers online</span>';
   }
 }
 

@@ -265,6 +265,13 @@ a.button-link:hover {
   justify-content: center;
 }
 
+/* Review sectie */
+#review .stars { display:flex; justify-content:center; gap:5px; cursor:pointer; font-size:2rem; margin-bottom:10px; }
+#review .star { color:#555; transition:0.2s; }
+#review .star.hover, #review .star.selected { color:#f1c40f; }
+#yourRating { font-size:1rem; margin-top:5px; text-align:center; }
+#reviewersList { text-align:center; font-size:0.85rem; margin-top:5px; color:#fff; }
+
 @media(max-width:480px){
     main, section { padding:15px 20px; }
     header img { width:90px; }
@@ -286,6 +293,7 @@ a.button-link:hover {
   <button onclick="showSection('home')">Home</button>
   <button onclick="showSection('informatie')">Informatie</button>
   <button onclick="showSection('media')">Media</button>
+  <button onclick="showSection('review')">Review</button>
 </nav>
 
 <main>
@@ -371,13 +379,27 @@ a.button-link:hover {
       <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
     </div>
   </section>
+
+  <!-- Review Sectie -->
+  <section id="review">
+    <h2>⭐ Beoordeel ZeroPoint SMP ⭐</h2>
+    <div class="stars">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <div id="yourRating">Je beoordeling: nog niet gegeven</div>
+    <div id="reviewersList"></div>
+  </section>
 </main>
 
 <!-- TikTok sectie -->
 <div id="tiktok-section">
   <div class="title">Volg ons op TikTok</div>
   <div class="links">
-    <a href="https://www.tiktok.com/@pannenkoek17" target="_blank" class="button-link">Desley (@pannenkoek17)</a>
+    <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link">Desley (@pannekoek17)</a>
     <a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
     <a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
   </div>
@@ -456,6 +478,46 @@ document.querySelectorAll('.discord-user').forEach(el => {
     navigator.clipboard.writeText(tag).then(() => alert(`Discord-tag "${tag}" is gekopieerd!`));
   });
 });
+
+// Review JS
+const stars = document.querySelectorAll('#review .star');
+const yourRating = document.getElementById('yourRating');
+const reviewersList = document.getElementById('reviewersList');
+
+function updateStarsDisplay(rating){
+  stars.forEach(s => {
+    s.classList.remove('selected');
+    if(parseInt(s.dataset.value) <= rating) s.classList.add('selected');
+  });
+  yourRating.textContent = 'Je beoordeling: ' + rating + ' ster' + (rating>1?'ren':'');
+}
+
+// Load rating from localStorage
+let savedRating = localStorage.getItem('rating') || 0;
+let reviewers = JSON.parse(localStorage.getItem('reviewers') || '[]');
+updateStarsDisplay(savedRating);
+reviewersList.innerHTML = reviewers.join('<br>');
+
+stars.forEach(star=>{
+  star.addEventListener('click',()=>{
+    let rating = parseInt(star.dataset.value);
+    updateStarsDisplay(rating);
+    localStorage.setItem('rating', rating);
+    if(!reviewers.includes('Jij')){
+      reviewers.push('Jij');
+      localStorage.setItem('reviewers', JSON.stringify(reviewers));
+      reviewersList.innerHTML = reviewers.join('<br>');
+    }
+  });
+  star.addEventListener('mouseover',()=>{
+    stars.forEach(s=>{
+      s.classList.remove('hover');
+      if(parseInt(s.dataset.value) <= parseInt(star.dataset.value)) s.classList.add('hover');
+    });
+  });
+  star.addEventListener('mouseout',()=>{ stars.forEach(s=>s.classList.remove('hover')); });
+});
 </script>
+
 </body>
 </html>

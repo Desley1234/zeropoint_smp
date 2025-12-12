@@ -238,7 +238,6 @@ a.button-link:hover {
   box-shadow: 0 6px 15px #ffeb3b80;
 }
 
-/* TikTok-balk onderaan */
 #tiktok-section {
   position: fixed;
   bottom: 0;
@@ -266,23 +265,71 @@ a.button-link:hover {
 }
 
 /* Review sectie */
-#review .stars { display:flex; justify-content:center; gap:5px; cursor:pointer; font-size:2rem; margin-bottom:10px; }
-#review .star { color:#555; transition:0.2s; }
-#review .star.hover, #review .star.selected { color:#f1c40f; }
+#review .stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+#review .star {
+  color: white;
+  transition: 0.2s;
+}
+#review .star.hover,
+#review .star.selected {
+  color: #f1c40f;
+}
+#yourRating {
+  font-size: 1rem;
+  margin-top: 5px;
+  text-align: center;
+  color: #ffff00;
+}
+#reviewersList {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 15px;
+  color: #ffff00;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#reviewersList .reviewer {
+  margin-bottom: 10px;
+}
+#reviewersList .reviewer .name {
+  font-weight: bold;
+  margin-right: 8px;
+}
+#reviewersList .reviewer .stars {
+  font-size: 1.2rem;
+  vertical-align: middle;
+  color: #ffff00;
+}
 
-#reviewersList { text-align:center; font-size:0.9rem; margin-top:10px; color:#fff; display:flex; flex-direction:column; gap:6px; }
-.review-item { display:flex; justify-content:center; align-items:center; gap:8px; }
-.review-item .review-name { font-weight:bold; color:#fff; }
-.review-item .review-stars { color:#f1c40f; font-size:1.2rem; letter-spacing:1px; }
-.review-item .review-stars span { margin-right:2px; }
+#reviewNameInput {
+  display: block;
+  margin: 0 auto 10px auto;
+  font-family: 'Press Start 2P', cursive, monospace;
+  font-size: 1rem;
+  padding: 6px 10px;
+  width: 140px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  text-align: center;
+  letter-spacing: 1.5px;
+}
 
 @media(max-width:480px){
-    main, section { padding:15px 20px; }
-    header img { width:90px; }
-    h2 { font-size:0.9rem; }
-    li { font-size:0.65rem; }
-    .button-container { flex-direction:column; }
-    button.copy, a.button-link { width:100%; font-size:0.75rem; padding:12px; }
+    main, section { padding: 15px 20px; }
+    header img { width: 90px; }
+    h2 { font-size: 0.9rem; }
+    li { font-size: 0.65rem; }
+    .button-container { flex-direction: column; }
+    button.copy, a.button-link { width: 100%; font-size: 0.75rem; padding: 12px; }
 }
 </style>
 </head>
@@ -301,127 +348,116 @@ a.button-link:hover {
 </nav>
 
 <main>
-  <section id="home" class="active">
-    <h2>Home</h2>
+<section id="home" class="active">
+<h2>Home</h2>
+<div class="info-box" id="serverStatus">
+<p>Status: <span id="statusText">Laden...</span></p>
+<p>Spelers: <span id="playersCount">0/20</span></p>
+<div id="playersList" class="players-list"></div>
+<div class="button-container">
+<button class="copy" id="copyIpBtn">Copy server IP</button>
+<a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+</div>
+</div>
 
-    <div class="info-box" id="serverStatus">
-      <p>Status: <span id="statusText">Laden...</span></p>
-      <p>Spelers: <span id="playersCount">0/0</span></p>
-      <div id="playersList" class="players-list"></div>
-      <div class="button-container">
-        <button class="copy" id="copyIpBtn">Copy server IP</button>
-        <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
-      </div>
-    </div>
+<h2>📜 Onze Server Regels</h2>
+<h3>Algemeen Gedrag</h3>
+<ul>
+<li class="correct">Respecteer alle spelers</li>
+<li class="wrong">Geen racisme, discriminatie, bedreigingen of toxisch gedrag.</li>
+<li class="wrong">Geen spam, reclame of promotie van andere servers.</li>
+</ul>
 
-    <h2>📜 Onze Server Regels</h2>
-    <h3>Algemeen Gedrag</h3>
-    <ul>
-      <li class="correct">Respecteer alle spelers</li>
-      <li class="wrong">Geen racisme, discriminatie, bedreigingen of toxisch gedrag.</li>
-      <li class="wrong">Geen spam, reclame of promotie van andere servers.</li>
-    </ul>
+<h3>PvP Regels</h3>
+<ul>
+<li class="correct">PvP is toegestaan alleen denk er wel aan dat je niet mensen gaat killen zonder gear.</li>
+<li class="wrong">Geen combat logging (uitloggen tijdens gevecht).</li>
+<li class="wrong">Geen spawn-killing of langdurig campen bij vijandelijke base</li>
+<li class="wrong">Bug-abuse om bases binnen te dringen is verboden.</li>
+<li class="wrong">X-ray tunnels, illegal traps of block exploits zijn niet toegestaan.</li>
+</ul>
 
-    <h3>PvP Regels</h3>
-    <ul>
-      <li class="correct">PvP is toegestaan alleen denk er wel aan dat je niet mensen gaat killen zonder gear.</li>
-      <li class="wrong">Geen combat logging (uitloggen tijdens gevecht).</li>
-      <li class="wrong">Geen spawn-killing of langdurig campen bij vijandelijke base</li>
-      <li class="wrong">Bug-abuse om bases binnen te dringen is verboden.</li>
-      <li class="wrong">X-ray tunnels, illegal traps of block exploits zijn niet toegestaan.</li>
-    </ul>
+<h3>🔧 Modding & Cheats</h3>
+<ul>
+<li class="wrong">Geen hacked clients (KillAura, Fly, X-ray, ESP, etc.).</li>
+<li class="wrong">Geen macro’s, autoclickers of unfair advantage mods.</li>
+<li class="correct">Optifine, shaders en mini-maps zonder radar, cave mode zijn toegestaan.</li>
+<li class="wrong">Bugs of glitches misbruiken = Warn.</li>
+<li class="wrong">Bases slopen mag niet</li>
+</ul>
 
-    <h3>🔧 Modding & Cheats</h3>
-    <ul>
-      <li class="wrong">Geen hacked clients (KillAura, Fly, X-ray, ESP, etc.).</li>
-      <li class="wrong">Geen macro’s, autoclickers of unfair advantage mods.</li>
-      <li class="correct">Optifine, shaders en mini-maps zonder radar, cave mode zijn toegestaan.</li>
-      <li class="wrong">Bugs of glitches misbruiken = Warn.</li>
-      <li class="wrong">Bases slopen mag niet</li>
-    </ul>
+<div class="owners">
+<strong>Eigenaren:</strong>
+<a href="https://discord.com/users/desley6573" target="_blank" class="discord-user">Desley</a>,
+<a href="https://discord.com/users/mikenl0497" target="_blank" class="discord-user">Mike</a>
+</div>
+<div class="management">
+<strong>Management:</strong>
+<a href="https://discord.com/users/noxenbence" target="_blank" class="discord-user">Bence</a>
+</div>
+</section>
 
-    <div class="owners">
-      <strong>Eigenaren:</strong>
-      <a href="https://discord.com/users/desley6573" target="_blank" class="discord-user">Desley</a>,
-      <a href="https://discord.com/users/mikenl0497" target="_blank" class="discord-user">Mike</a>
-    </div>
-    <div class="management">
-      <strong>Management:</strong>
-      <a href="https://discord.com/users/noxenbence" target="_blank" class="discord-user">Bence</a>
-    </div>
-  </section>
+<section id="informatie">
+<h2>🎮 Informatie 🎮</h2>
+<div class="info-box">
+<ul>
+<li>❤️ Je start met <strong>5 levens</strong>. Verlies ze niet!</li>
+<li>🏆 <strong>Wekelijkse 1v1-toernooien</strong> voor extra uitdagingen.</li>
+<li>🎉 Win je een event? Dan krijg je een extra leven of worden al je levens teruggezet.</li>
+<li>🔥 Onze top-record: <strong>10 spelers</strong> tegelijk online.</li>
+<li>🎁 Bij aankomst ontvang je een speciaal <strong>welkomst-kitje</strong>.</li>
+<li>⚔️ Kies je kit: <strong>PvP pack</strong> of <strong>Build pack</strong>.</li>
+<li>🛡️ Custom <strong>arena</strong> voor epische gevechten.</li>
+<li>🌎 Fully survival met economy en custom mobs voor extra uitdaging.</li>
+<li>🎨 Bouw en creëer je eigen base met vriendengroepen.</li>
+<li>🔧 Regelmatig updates, fixes en nieuwe events.</li>
+<li>💬 Active community via Discord en ingame chat.</li>
+<li>📊 Leaderboards voor top spelers en PvP-rankings.</li>
+</ul>
+<div class="button-container">
+<button class="copy" id="copyIpBtnInfo">Copy server IP</button>
+<a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+</div>
+</div>
+</section>
 
-  <section id="informatie">
-    <h2>🎮 Informatie 🎮</h2>
-    <div class="info-box">
-      <ul>
-        <li>❤️ Je start met <strong>5 levens</strong>. Verlies ze niet!</li>
-        <li>🏆 <strong>Wekelijkse 1v1-toernooien</strong> voor extra uitdagingen.</li>
-        <li>🎉 Win je een event? Dan krijg je een extra leven of worden al je levens teruggezet.</li>
-        <li>🔥 Onze top-record: <strong>10 spelers</strong> tegelijk online.</li>
-        <li>🎁 Bij aankomst ontvang je een speciaal <strong>welkomst-kitje</strong>.</li>
-        <li>⚔️ Kies je kit: <strong>PvP pack</strong> of <strong>Build pack</strong>.</li>
-        <li>🛡️ Custom <strong>arena</strong> voor epische gevechten.</li>
-        <li>🌎 Fully survival met economy en custom mobs voor extra uitdaging.</li>
-        <li>🎨 Bouw en creëer je eigen base met vriendengroepen.</li>
-        <li>🔧 Regelmatig updates, fixes en nieuwe events.</li>
-        <li>💬 Active community via Discord en ingame chat.</li>
-        <li>📊 Leaderboards voor top spelers en PvP-rankings.</li>
-      </ul>
-      <div class="button-container">
-        <button class="copy" id="copyIpBtnInfo">Copy server IP</button>
-        <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
-      </div>
-    </div>
-  </section>
+<section id="media">
+<h2>📸 Foto's & Video's 📹</h2>
+<p>Bekijk onze Minecraft-clip op Medal:</p>
+<div class="button-container">
+<a href="https://medal.tv/nl/games/minecraft/clips/lDN6MNerp2fuR2Uft?invite=cr-MSxKRXosMzU0MDc4NTkx&amp;v=36" target="_blank" class="button-link">Bekijk Video</a>
+</div>
+<h2>Foto's</h2>
+<div class="photo-gallery">
+<img src="images/Zeropoint.png" alt="ZeroPoint SMP Screenshot" />
+<img src="images/boys.png" alt="ZeroPoint SMP Spelers" />
+<img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
+</div>
+</section>
 
-  <section id="media">
-    <h2>📸 Foto's & Video's 📹</h2>
-    <p>Bekijk onze Minecraft-clip op Medal:</p>
-    <div class="button-container">
-      <a href="https://medal.tv/nl/games/minecraft/clips/lDN6MNerp2fuR2Uft?invite=cr-MSxKRXosMzU0MDc4NTkx&amp;v=36" target="_blank" class="button-link">Bekijk Video</a>
-    </div>
-    <h2>Foto's</h2>
-    <div class="photo-gallery">
-      <img src="images/Zeropoint.png" alt="ZeroPoint SMP Screenshot" />
-      <img src="images/boys.png" alt="ZeroPoint SMP Spelers" />
-      <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
-    </div>
-  </section>
-
-  <!-- Review sectie -->
-  <section id="review">
-    <h2>⭐ Beoordeel ZeroPoint SMP ⭐</h2>
-
-    <div class="stars">
-      <span class="star" data-value="1">★</span>
-      <span class="star" data-value="2">★</span>
-      <span class="star" data-value="3">★</span>
-      <span class="star" data-value="4">★</span>
-      <span class="star" data-value="5">★</span>
-    </div>
-
-    <div id="yourRating">Je beoordeling: nog niet gegeven</div>
-
-    <div style="margin-top:10px;">
-      <label for="reviewerName">Naam (max 6 letters): </label>
-      <input type="text" id="reviewerName" maxlength="6" placeholder="Naam">
-      <button id="submitReview">Verstuur</button>
-    </div>
-
-    <h3>Alle reviews:</h3>
-    <div id="reviewersList"></div>
-  </section>
-
+<section id="review">
+<h2>⭐ Beoordeel ZeroPoint SMP ⭐</h2>
+<input id="reviewNameInput" maxlength="6" placeholder="Je naam (max 6 letters)" />
+<div class="stars" id="starsContainer">
+<span class="star" data-value="1">★</span>
+<span class="star" data-value="2">★</span>
+<span class="star" data-value="3">★</span>
+<span class="star" data-value="4">★</span>
+<span class="star" data-value="5">★</span>
+</div>
+<button id="submitReviewBtn" class="copy" style="margin-top:10px; width:160px;">Verstuur review</button>
+<div id="yourRating">Je beoordeling: nog niet gegeven</div>
+<div id="reviewersList"></div>
+</section>
 </main>
 
 <div id="tiktok-section">
-  <div class="title">Volg ons op TikTok</div>
-  <div class="links">
-    <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link">Desley (@pannekoek17)</a>
-    <a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
-    <a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
-  </div>
+<div class="title">Volg ons op TikTok</div>
+<div class="links">
+<a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link">Desley (@pannekoek17)</a>
+<a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
+<a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
+</div>
 </div>
 
 <script>
@@ -440,110 +476,99 @@ document.getElementById('copyIpBtnInfo').addEventListener('click', () => {
   navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
 });
 
-// Server status ophalen via mcsrvstat
+// Server status ophalen (omgekeerde logica)
 async function updateServerStatus() {
   const statusText = document.getElementById('statusText');
   const playersCount = document.getElementById('playersCount');
   const playersList = document.getElementById('playersList');
-
   try {
-    const res = await fetch('https://api.mcsrvstat.us/3/Mikeeeee1-9Mba.aternos.me');
+    const res = await fetch('https://api.mcsrvstat.us/2/Mikeeeee1-9Mba.aternos.me');
     const data = await res.json();
-
-    if (data.online) {
-      statusText.textContent = 'Online ✅';
-      statusText.style.color = 'lime';
-      playersCount.textContent = `${data.players.online}/${data.players.max}`;
-      if (data.players.list && data.players.list.length > 0) {
-        playersList.innerHTML = '';
-        data.players.list.forEach(p => {
-          const span = document.createElement('span');
-          span.textContent = p;
-          playersList.appendChild(span);
-        });
-      } else {
-        playersList.innerHTML = '<span>Geen spelers online</span>';
-      }
+    if(data.online){
+      statusText.textContent = "Offline ❌";
+      playersCount.textContent = "0/20";
+      playersList.innerHTML = '';
     } else {
-      statusText.textContent = 'Offline ❌';
-      statusText.style.color = 'red';
-      playersCount.textContent = `0/0`;
-      playersList.innerHTML = '<span>Geen spelers online</span>';
+      statusText.textContent = "Online ✅";
+      playersCount.textContent = "0/20";
+      playersList.innerHTML = '';
     }
-  } catch (err) {
-    statusText.textContent = 'Fout bij laden';
-    statusText.style.color = 'orange';
-    playersCount.textContent = `0/0`;
-    playersList.innerHTML = '<span>Geen spelers online</span>';
+  } catch(err){
+    statusText.textContent = "Offline ❌";
+    playersCount.textContent = "0/20";
+    playersList.innerHTML = '';
   }
 }
-
 updateServerStatus();
-setInterval(updateServerStatus, 15000);
+setInterval(updateServerStatus, 60000);
 
-// Review sectie
-const stars = document.querySelectorAll('#review .star');
+// Review sterren
+const starsContainer = document.getElementById('starsContainer');
+const stars = starsContainer.querySelectorAll('.star');
+const yourRating = document.getElementById('yourRating');
+const reviewNameInput = document.getElementById('reviewNameInput');
+const submitReviewBtn = document.getElementById('submitReviewBtn');
+const reviewersList = document.getElementById('reviewersList');
+
 let selectedRating = 0;
+let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
 
-function updateStarsDisplay(rating){
-  stars.forEach(s => s.classList.remove('selected'));
-  stars.forEach(s => s.classList.remove('hover'));
-  stars.forEach(s => {
-    if(parseInt(s.dataset.value) <= rating) s.classList.add('selected');
+function renderReviews(){
+  reviewersList.innerHTML = '';
+  reviews.forEach(r => {
+    const div = document.createElement('div');
+    div.classList.add('reviewer');
+    div.innerHTML = `<span class="name">${r.name}</span> <span class="stars">${'★'.repeat(r.rating)}</span>`;
+    reviewersList.appendChild(div);
   });
-  document.getElementById('yourRating').textContent = 
-    rating > 0 ? `Je beoordeling: ${rating} ster${rating > 1 ? 'ren' : ''}` : 'Je beoordeling: nog niet gegeven';
 }
 
 stars.forEach(star => {
   star.addEventListener('mouseover', () => {
-    const val = parseInt(star.dataset.value);
     stars.forEach(s => s.classList.remove('hover'));
-    stars.forEach(s => {
-      if(parseInt(s.dataset.value) <= val) s.classList.add('hover');
-    });
+    for(let i=0;i<star.dataset.value;i++) stars[i].classList.add('hover');
   });
   star.addEventListener('mouseout', () => {
-    updateStarsDisplay(selectedRating);
+    stars.forEach(s => s.classList.remove('hover'));
+    for(let i=0;i<selectedRating;i++) stars[i].classList.add('selected');
   });
   star.addEventListener('click', () => {
     selectedRating = parseInt(star.dataset.value);
-    updateStarsDisplay(selectedRating);
+    stars.forEach(s => s.classList.remove('selected'));
+    for(let i=0;i<selectedRating;i++) stars[i].classList.add('selected');
+    yourRating.textContent = `Je beoordeling: ${selectedRating} ster(s)`;
   });
 });
 
-const reviewersList = document.getElementById('reviewersList');
-const reviewerInput = document.getElementById('reviewerName');
-const submitBtn = document.getElementById('submitReview');
-
-let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
-
-function renderReviews(){
-  if(reviews.length === 0){
-    reviewersList.innerHTML = '<span>Geen reviews</span>';
+submitReviewBtn.addEventListener('click', () => {
+  const name = reviewNameInput.value.trim();
+  if(!name){
+    alert('Vul een naam in.');
     return;
   }
-  reviewersList.innerHTML = reviews.map(r => {
-    const starsHtml = Array(r.rating).fill('★').map(s => `<span>${s}</span>`).join('');
-    return `<div class="review-item"><span class="review-name">${r.name}</span> <span class="review-stars">${starsHtml}</span></div>`;
-  }).join('');
-}
-
-renderReviews();
-
-submitBtn.addEventListener('click', () => {
-  const name = reviewerInput.value.trim();
-  if(name === '' || selectedRating === 0){
-    alert('Vul een naam in (max 6 letters) en selecteer een aantal sterren.');
+  if(name.length > 6){
+    alert('Naam mag maximaal 6 letters zijn.');
     return;
   }
-  reviews.push({name: name.substring(0,6), rating: selectedRating});
+  if(selectedRating === 0){
+    alert('Selecteer eerst een aantal sterren.');
+    return;
+  }
+  if(reviews.some(r=>r.name.toLowerCase()===name.toLowerCase())){
+    alert('Je hebt al een review ingediend met deze naam!');
+    return;
+  }
+  const newReview = {name, rating: selectedRating};
+  reviews.push(newReview);
   localStorage.setItem('reviews', JSON.stringify(reviews));
   renderReviews();
-  reviewerInput.value = '';
+  reviewNameInput.value = '';
   selectedRating = 0;
-  updateStarsDisplay(0);
+  stars.forEach(s => s.classList.remove('selected'));
+  yourRating.textContent = 'Je beoordeling: nog niet gegeven';
 });
+
+renderReviews();
 </script>
 
 </body>

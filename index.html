@@ -21,13 +21,13 @@ body {
 header {
   background: #222;
   width: 100%;
-  padding: 20px 0;
+  padding: 15px 0;
   text-align: center;
   box-shadow: 0 0 15px #000;
 }
 
 header img {
-  width: 120px;
+  width: 100px;
   transition: transform 0.3s;
 }
 header img:hover {
@@ -35,22 +35,23 @@ header img:hover {
 }
 
 header h1 {
-  margin: 10px 0 0;
-  font-size: 1.5rem;
+  margin: 8px 0 0;
+  font-size: 1.2rem;
   letter-spacing: 4px;
   text-shadow: 2px 2px #000;
 }
 
 nav {
-  margin: 20px;
+  margin: 15px;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 nav button {
   background: #ff5722;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 15px;
   color: white;
   font-family: 'Press Start 2P', cursive, monospace;
   cursor: pointer;
@@ -67,13 +68,14 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 120px; /* ruimte voor TikTok-balk */
+  padding-bottom: 150px; /* ruimte voor TikTok-balk */
 }
 
 section {
   display: none;
   background: #263238;
-  padding: 20px 30px;
+  padding: 15px 20px;
+  width: 90%;
   max-width: 700px;
   border-radius: 12px;
   box-shadow: 0 0 20px #000a;
@@ -111,7 +113,7 @@ li {
   padding-left: 30px;
   margin-bottom: 10px;
   position: relative;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 li.correct::before {
@@ -129,7 +131,7 @@ li.wrong::before {
 
 .button-container {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 15px;
@@ -139,8 +141,8 @@ a.button-link {
   background: #ff5722;
   color: #fff;
   font-weight: bold;
-  font-size: 0.85rem;
-  padding: 12px 24px;
+  font-size: 0.8rem;
+  padding: 10px 20px;
   border-radius: 12px;
   text-decoration: none;
   box-shadow: 0 4px 6px #d84315;
@@ -158,7 +160,7 @@ a.button-link:hover {
   border-radius: 12px;
   padding: 15px 20px;
   box-shadow: inset 0 0 15px #0008;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   line-height: 1.5;
   margin-bottom: 20px;
   text-align: left;
@@ -178,7 +180,7 @@ a.button-link:hover {
   position: absolute;
   left: 0;
   top: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.4;
   color: #ffeb3b;
 }
@@ -194,8 +196,8 @@ a.button-link:hover {
   display: inline-block;
   margin: 0 5px 5px 0;
   padding: 2px 6px;
-  color: #fff; /* volledig wit */
-  background: none; /* geen gele achtergrond */
+  color: #fff;
+  background: none;
 }
 
 .owners, .management {
@@ -203,13 +205,13 @@ a.button-link:hover {
   padding: 12px;
   border-radius: 8px;
   margin-top: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: center;
   box-shadow: inset 0 0 10px #0008;
 }
 .owners strong, .management strong {
   color: #ffeb3b;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
 }
 .discord-user {
   cursor: pointer;
@@ -250,10 +252,11 @@ a.button-link:hover {
   align-items: center;
   padding: 12px 0;
   gap: 5px;
+  z-index: 100;
 }
 
 #tiktok-section .title {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: bold;
   color: #fff;
 }
@@ -270,15 +273,29 @@ a.button-link:hover {
 #review .star { color:#555; transition:0.2s; }
 #review .star.hover, #review .star.selected { color:#f1c40f; }
 #yourRating { font-size:1rem; margin-top:5px; text-align:center; }
-#reviewersList { text-align:center; font-size:0.85rem; margin-top:5px; color:#fff; }
+#reviewersList { text-align:center; font-size:0.8rem; margin-top:5px; color:#fff; }
 
+/* Responsive mobiel */
 @media(max-width:480px){
-    main, section { padding:15px 20px; }
-    header img { width:90px; }
-    h2 { font-size:0.9rem; }
+    main, section { padding:15px 10px; }
+    header img { width: 80px; }
+    header h1 { font-size: 1rem; }
+    nav {
+        flex-direction: column;
+        gap: 8px;
+        margin: 10px;
+    }
+    nav button {
+        width: 100%;
+        font-size: 0.7rem;
+        padding: 8px 0;
+    }
+    h2 { font-size:1rem; }
     li { font-size:0.65rem; }
-    .button-container { flex-direction:column; }
-    button.copy, a.button-link { width:100%; font-size:0.75rem; padding:12px; }
+    .button-container { flex-direction: column; gap:8px; }
+    button.copy, a.button-link { width:100%; font-size:0.75rem; padding:10px; }
+    .photo-gallery img { max-width: 100%; }
+    #tiktok-section .links { flex-direction: column; gap:5px; }
 }
 </style>
 </head>
@@ -380,7 +397,6 @@ a.button-link:hover {
     </div>
   </section>
 
-  <!-- Review Sectie -->
   <section id="review">
     <h2>⭐ Beoordeel ZeroPoint SMP ⭐</h2>
     <div class="stars">
@@ -395,7 +411,6 @@ a.button-link:hover {
   </section>
 </main>
 
-<!-- TikTok sectie -->
 <div id="tiktok-section">
   <div class="title">Volg ons op TikTok</div>
   <div class="links">
@@ -464,58 +479,32 @@ async function updateServerStatus() {
     statusText.textContent = 'Fout bij laden';
     statusText.style.color = 'red';
     playersCount.textContent = '0/0';
-    playersList.innerHTML = '<span>Geen spelers online</span>';
+    playersList.innerHTML = '<span>Kan status niet ophalen</span>';
   }
 }
 
+// Update status direct en elke 30 sec
 updateServerStatus();
 setInterval(updateServerStatus, 30000);
 
-// Discord-tag kopiëren
-document.querySelectorAll('.discord-user').forEach(el => {
-  el.addEventListener('click', () => {
-    const tag = el.textContent;
-    navigator.clipboard.writeText(tag).then(() => alert(`Discord-tag "${tag}" is gekopieerd!`));
-  });
-});
-
-// Review JS
+// Review sterren
 const stars = document.querySelectorAll('#review .star');
-const yourRating = document.getElementById('yourRating');
-const reviewersList = document.getElementById('reviewersList');
+const ratingText = document.getElementById('yourRating');
+let selectedRating = 0;
 
-function updateStarsDisplay(rating){
-  stars.forEach(s => {
-    s.classList.remove('selected');
-    if(parseInt(s.dataset.value) <= rating) s.classList.add('selected');
+stars.forEach(star => {
+  star.addEventListener('mouseover', () => {
+    const val = parseInt(star.dataset.value);
+    stars.forEach(s => s.classList.toggle('hover', parseInt(s.dataset.value) <= val));
   });
-  yourRating.textContent = 'Je beoordeling: ' + rating + ' ster' + (rating>1?'ren':'');
-}
-
-// Load rating from localStorage
-let savedRating = localStorage.getItem('rating') || 0;
-let reviewers = JSON.parse(localStorage.getItem('reviewers') || '[]');
-updateStarsDisplay(savedRating);
-reviewersList.innerHTML = reviewers.join('<br>');
-
-stars.forEach(star=>{
-  star.addEventListener('click',()=>{
-    let rating = parseInt(star.dataset.value);
-    updateStarsDisplay(rating);
-    localStorage.setItem('rating', rating);
-    if(!reviewers.includes('Jij')){
-      reviewers.push('Jij');
-      localStorage.setItem('reviewers', JSON.stringify(reviewers));
-      reviewersList.innerHTML = reviewers.join('<br>');
-    }
+  star.addEventListener('mouseout', () => {
+    stars.forEach(s => s.classList.remove('hover'));
   });
-  star.addEventListener('mouseover',()=>{
-    stars.forEach(s=>{
-      s.classList.remove('hover');
-      if(parseInt(s.dataset.value) <= parseInt(star.dataset.value)) s.classList.add('hover');
-    });
+  star.addEventListener('click', () => {
+    selectedRating = parseInt(star.dataset.value);
+    stars.forEach(s => s.classList.toggle('selected', parseInt(s.dataset.value) <= selectedRating));
+    ratingText.textContent = 'Je beoordeling: ' + selectedRating + ' ⭐';
   });
-  star.addEventListener('mouseout',()=>{ stars.forEach(s=>s.classList.remove('hover')); });
 });
 </script>
 

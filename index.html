@@ -45,7 +45,8 @@ nav {
   margin: 20px;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 nav button {
   background: #ff5722;
@@ -285,13 +286,13 @@ a.button-link:hover {
   font-size: 1rem;
   margin-top: 5px;
   text-align: center;
-  color: #ffff00;
+  color: #f1c40f; /* geel voor review */
 }
 #reviewersList {
   text-align: center;
   font-size: 0.85rem;
   margin-top: 15px;
-  color: #ffff00;
+  color: #f1c40f; /* geel voor alle reviews */
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
@@ -306,7 +307,7 @@ a.button-link:hover {
 #reviewersList .reviewer .stars {
   font-size: 1.2rem;
   vertical-align: middle;
-  color: #ffff00;
+  color: #f1c40f;
 }
 
 #reviewNameInput {
@@ -330,6 +331,7 @@ a.button-link:hover {
     li { font-size: 0.65rem; }
     .button-container { flex-direction: column; }
     button.copy, a.button-link { width: 100%; font-size: 0.75rem; padding: 12px; }
+    nav button { padding: 8px 12px; font-size: 0.7rem; }
 }
 </style>
 </head>
@@ -500,75 +502,63 @@ async function updateServerStatus() {
   }
 }
 updateServerStatus();
-setInterval(updateServerStatus, 60000);
 
-// Review sterren
-const starsContainer = document.getElementById('starsContainer');
-const stars = starsContainer.querySelectorAll('.star');
+// Review systeem
+const stars = document.querySelectorAll('.star');
 const yourRating = document.getElementById('yourRating');
-const reviewNameInput = document.getElementById('reviewNameInput');
-const submitReviewBtn = document.getElementById('submitReviewBtn');
-const reviewersList = document.getElementById('reviewersList');
-
 let selectedRating = 0;
-let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
-
-function renderReviews(){
-  reviewersList.innerHTML = '';
-  reviews.forEach(r => {
-    const div = document.createElement('div');
-    div.classList.add('reviewer');
-    div.innerHTML = `<span class="name">${r.name}</span> <span class="stars">${'★'.repeat(r.rating)}</span>`;
-    reviewersList.appendChild(div);
-  });
-}
-
 stars.forEach(star => {
   star.addEventListener('mouseover', () => {
     stars.forEach(s => s.classList.remove('hover'));
     for(let i=0;i<star.dataset.value;i++) stars[i].classList.add('hover');
   });
-  star.addEventListener('mouseout', () => {
-    stars.forEach(s => s.classList.remove('hover'));
-    for(let i=0;i<selectedRating;i++) stars[i].classList.add('selected');
-  });
+  star.addEventListener('mouseout', () => stars.forEach(s => s.classList.remove('hover')));
   star.addEventListener('click', () => {
     selectedRating = parseInt(star.dataset.value);
-    stars.forEach(s => s.classList.remove('selected'));
-    for(let i=0;i<selectedRating;i++) stars[i].classList.add('selected');
-    yourRating.textContent = `Je beoordeling: ${selectedRating} ster(s)`;
+    stars.forEach((s,i) => s.classList.toggle('selected', i < selectedRating));
+    yourRating.textContent = `Je beoordeling: ${selectedRating} sterren`;
   });
 });
 
-submitReviewBtn.addEventListener('click', () => {
-  const name = reviewNameInput.value.trim();
-  if(!name){
-    alert('Vul een naam in.');
+const reviewersList = document.getElementById('reviewersList');
+const submitBtn = document.getElementById('submitReviewBtn');
+submitBtn.addEventListener('click', () => {
+  const nameInput = document.getElementById('reviewNameInput').value.trim();
+  if(!nameInput){
+    alert('Vul een naam in (max 6 letters)');
     return;
   }
-  if(name.length > 6){
-    alert('Naam mag maximaal 6 letters zijn.');
+  if(nameInput.length>6){
+    alert('Naam mag maximaal 6 letters zijn');
     return;
   }
-  if(selectedRating === 0){
-    alert('Selecteer eerst een aantal sterren.');
+  if(selectedRating===0){
+    alert('Kies eerst een rating!');
     return;
   }
-  if(reviews.some(r=>r.name.toLowerCase()===name.toLowerCase())){
-    alert('Je hebt al een review ingediend met deze naam!');
+
+  // Check of naam al in localStorage zit
+  let reviewers = JSON.parse(localStorage.getItem('reviewers') || '[]');
+  if(reviewers.some(r => r.name.toLowerCase()===nameInput.toLowerCase())){
+    alert('Deze naam heeft al een review gegeven');
     return;
   }
-  const newReview = {name, rating: selectedRating};
-  reviews.push(newReview);
-  localStorage.setItem('reviews', JSON.stringify(reviews));
-  renderReviews();
-  reviewNameInput.value = '';
-  selectedRating = 0;
-  stars.forEach(s => s.classList.remove('selected'));
-  yourRating.textContent = 'Je beoordeling: nog niet gegeven';
+
+  reviewers.push({name:nameInput, rating:selectedRating});
+  localStorage.setItem('reviewers', JSON.stringify(reviewers));
+  displayReviews();
 });
 
-renderReviews();
+function displayReviews(){
+  let reviewers = JSON.parse(localStorage.getItem('reviewers') || '[]');
+  reviewersList.innerHTML = '';
+  reviewers.forEach(r=>{
+    let starsHtml = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
+    reviewersList.innerHTML += `<div class="reviewer"><span class="name">${r.name}:</span> <span class="stars">${starsHtml}</span></div>`;
+  });
+}
+
+displayReviews();
 </script>
 
 </body>

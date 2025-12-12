@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ZeroPoint SMP</title>
+<link rel="icon" href="images/Zeropoint.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, #8bc34a, #4caf50);
+  font-family: 'Press Start 2P', cursive, monospace;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  background: #222;
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 0 15px #000;
+}
+
+header img {
+  width: 120px;
+  transition: transform 0.3s;
+}
+header img:hover {
+  transform: rotate(10deg) scale(1.05);
+}
+
+header h1 {
+  margin: 10px 0 0;
+  font-size: 1.5rem;
+  letter-spacing: 4px;
+  text-shadow: 2px 2px #000;
+}
+
+/* NAVIGATIE */
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+nav button {
+  background: #ff5722;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.7rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+nav button:hover {
+  background: #e64a19;
+}
+
+/* MAIN CONTENT */
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 120px;
+}
+
+section {
+  display: none;
+  background: #263238;
+  padding: 15px 20px;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #000a;
+  margin-bottom: 30px;
+  text-align: center;
+}
+section.active {
+  display: block;
+}
+
+h2 {
+  color: #ffc107;
+  border-bottom: 3px solid #ffc107;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 25px 0;
+}
+li {
+  padding-left: 30px;
+  margin-bottom: 10px;
+  position: relative;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+li.correct::before {
+  content: "✔️";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+li.wrong::before {
+  content: "❌";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 15px;
+}
+button.copy,
+a.button-link {
+  background: #ff5722;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.75rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 3px 5px #d84315;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+button.copy:hover,
+a.button-link:hover {
+  background: #e64a19;
+}
+
+.info-box {
+  background: #455a64;
+  border-radius: 12px;
+  padding: 12px 15px;
+  box-shadow: inset 0 0 15px #0008;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.info-box li::before {
+  content: "➡️";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1rem;
+  color: #ffeb3b;
+}
+
+.players-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  text-align: center;
+}
+.players-list span {
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  padding: 2px 6px;
+  color: #fff;
+  background: none;
+}
+
+.owners, .management {
+  background: #37474f;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-size: 0.75rem;
+  text-align: center;
+  box-shadow: inset 0 0 10px #0008;
+}
+.owners strong, .management strong {
+  color: #ffeb3b;
+  letter-spacing: 1px;
+}
+.discord-user {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #00ccff;
+}
+
+.photo-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.photo-gallery img {
+  width: 100%;
+  max-width: 180px;
+  border: 4px solid #ffc107;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px #0008;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.photo-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px #ffeb3b80;
+}
+
+/* TikTok */
+#tiktok-section {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  gap: 5px;
+}
+#tiktok-section .title {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+}
+#tiktok-section .links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Review */
+#review .stars {
+  display:flex; justify-content:center; gap:5px; cursor:pointer; font-size:1.8rem; margin-bottom:10px;
+}
+#review .star { color:#555; transition:0.2s; }
+#review .star.hover, #review .star.selected { color:#f1c40f; }
+#yourRating { font-size:0.9rem; margin-top:5px; text-align:center; }
+#reviewersList { text-align:center; font-size:0.75rem; margin-top:5px; color:#fff; }
+
+/* Responsive */
+@media(max-width:480px){
+    main, section { padding:10px 15px; }
+    header img { width:80px; }
+    h2 { font-size:0.8rem; }
+    li { font-size:0.6rem; }
+    nav button { font-size:0.65rem; padding:6px 12px; }
+    .button-container { flex-direction:column; }
+    button.copy, a.button-link { width:100%; font-size:0.7rem; padding:10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="images/Zeropoint.png" alt="ZeroPoint SMP Logo" />
+  <h1>ZeroPoint SMP</h1>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('informatie')">Informatie</button>
+  <button onclick="showSection('media')">Media</button>
+  <button onclick="showSection('review')">Review</button>
+</nav>
+
+<main>
+  <section id="home" class="active">
+    <h2>Home</h2>
+    <div class="info-box" id="serverStatus">
+      <p>Status: <span id="statusText">Laden...</span></p>
+      <p>Spelers: <span id="playersCount">0/20</span></p>
+      <div id="playersList" class="players-list"></div>
+      <div class="button-container">
+        <button class="copy" id="copyIpBtn">Copy server IP</button>
+        <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+      </div>
+    </div>
+
+    <h2>📜 Onze Server Regels</h2>
+    <h3>Algemeen Gedrag</h3>
+    <ul>
+      <li class="correct">Respecteer alle spelers</li>
+      <li class="wrong">Geen racisme, discriminatie, bedreigingen of toxisch gedrag.</li>
+      <li class="wrong">Geen spam, reclame of promotie van andere servers.</li>
+    </ul>
+
+    <h3>PvP Regels</h3>
+    <ul>
+      <li class="correct">PvP is toegestaan alleen denk er wel aan dat je niet mensen gaat killen zonder gear.</li>
+      <li class="wrong">Geen combat logging (uitloggen tijdens gevecht).</li>
+      <li class="wrong">Geen spawn-killing of langdurig campen bij vijandelijke base</li>
+      <li class="wrong">Bug-abuse om bases binnen te dringen is verboden.</li>
+      <li class="wrong">X-ray tunnels, illegal traps of block exploits zijn niet toegestaan.</li>
+    </ul>
+
+    <h3>🔧 Modding & Cheats</h3>
+    <ul>
+      <li class="wrong">Geen hacked clients (KillAura, Fly, X-ray, ESP, etc.).</li>
+      <li class="wrong">Geen macro’s, autoclickers of unfair advantage mods.</li>
+      <li class="correct">Optifine, shaders en mini-maps zonder radar, cave mode zijn toegestaan.</li>
+      <li class="wrong">Bugs of glitches misbruiken = Warn.</li>
+      <li class="wrong">Bases slopen mag niet</li>
+    </ul>
+
+    <div class="owners">
+      <strong>Eigenaren:</strong>
+      <a href="https://discord.com/users/desley6573" target="_blank" class="discord-user">Desley</a>,
+      <a href="https://discord.com/users/mikenl0497" target="_blank" class="discord-user">Mike</a>
+    </div>
+    <div class="management">
+      <strong>Management:</strong>
+      <a href="https://discord.com/users/noxenbence" target="_blank" class="discord-user">Bence</a>
+    </div>
+  </section>
+
+  <section id="informatie">
+    <h2>🎮 Informatie 🎮</h2>
+    <div class="info-box">
+      <ul>
+        <li>❤️ Je start met <strong>5 levens</strong> — zorg dat je ze niet verliest!</li>
+        <li>🏆 <strong>Elke week</strong> organiseren we een spannend <em>1v1-toernooi</em>.</li>
+        <li>🎉 Win je een event? Dan krijg je een leven erbij of worden al je levens teruggezet.</li>
+        <li>🔥 Onze top-record: <strong>10 spelers</strong> tegelijk online.</li>
+        <li>🎁 Bij aankomst ontvang je een speciaal <strong>welkoms-kitje</strong>.</li>
+        <li>⚔️ Kies je kit: <strong>PvP pack</strong> of <strong>Build pack</strong>.</li>
+        <li>🛡️ We hebben een custom <strong>arena</strong> speciaal ontworpen voor epische fights.</li>
+      </ul>
+      <div class="button-container">
+        <button class="copy" id="copyIpBtnInfo">Copy server IP</button>
+        <a href="https://discord.gg/kfK5wgZX" target="_blank" class="button-link">Join Discord</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="media">
+    <h2>📸 Foto's & Video's 📹</h2>
+    <p>Bekijk onze Minecraft-clip op Medal:</p>
+    <div class="button-container">
+      <a href="https://medal.tv/nl/games/minecraft/clips/lDN6MNerp2fuR2Uft?invite=cr-MSxKRXosMzU0MDc4NTkx&amp;v=36" target="_blank" class="button-link">Bekijk Video</a>
+    </div>
+    <h2>Foto's</h2>
+    <div class="photo-gallery">
+      <img src="images/Zeropoint.png" alt="ZeroPoint SMP Screenshot" />
+      <img src="images/boys.png" alt="ZeroPoint SMP Spelers" />
+      <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
+    </div>
+  </section>
+
+  <section id="review">
+    <h2>⭐ Beoordeel ZeroPoint SMP ⭐</h2>
+    <div class="stars">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <div id="yourRating">Je beoordeling: nog niet gegeven</div>
+    <div id="reviewersList"></div>
+  </section>
+</main>
+
+<div id="tiktok-section">
+  <div class="title">Volg ons op TikTok</div>
+  <div class="links">
+    <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link">Desley (@pannekoek17)</a>
+    <a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
+    <a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 ZeroPoint SMP. Alle rechten voorbehouden.</p>
+</footer>
+
+<script>
+// Secties wisselen
+function showSection(id){
+  document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// Server IP kopiëren
+const serverIp = 'Mikeeeee1-9Mba.aternos.me';
+document.getElementById('copyIpBtn').addEventListener('click',()=>{ navigator.clipboard.writeText(serverIp).then(()=>alert('Server IP gekopieerd: ' + serverIp)); });
+document.getElementById('copyIpBtnInfo').addEventListener('click',()=>{ navigator.clipboard.writeText(serverIp).then(()=>alert('Server IP gekopieerd: ' + serverIp)); });
+
+// Server status ophalen en spelers tonen
+async function updateServerStatus(){
+  const statusText = document.getElementById('statusText');
+  const playersCount = document.getElementById('playersCount');
+  const playersList = document.getElementById('playersList');
+
+  try {
+    const res = await fetch('https://api.mcstatus.io/v2/status/java/Mikeeeee1-9Mba.aternos.me');
+    const data = await res.json();
+
+    const isOnline = data.online;
+
+    statusText.textContent = isOnline ? 'Online ✅' : 'Offline ❌';
+    statusText.style.color = isOnline ? 'lime' : 'red';
+
+    if(isOnline){
+      const onlinePlayers = data.players.list || [];
+      playersCount.textContent = `${onlinePlayers.length}/${data.players.max}`;
+
+      if(onlinePlayers.length > 0){
+        playersList.innerHTML = '';
+        onlinePlayers.forEach(player=>{
+          const span = document.createElement('span');
+          span.textContent = player.name;
+          playersList.appendChild(span);
+        });
+      } else {
+        playersList.innerHTML = '<span>Geen spelers online</span>';
+      }
+    } else {
+      playersCount.textContent = `0/${data.players.max || 0}`;
+      playersList.innerHTML = '<span>Geen spelers online</span>';
+    }
+
+  } catch(err){
+    console.error(err);
+    statusText.textContent = 'Fout bij laden';
+    statusText.style.color = 'red';
+    playersCount.textContent = '0/0';
+    playersList.innerHTML = '<span>Geen spelers online</span>';
+  }
+}
+
+updateServerStatus();
+setInterval(updateServerStatus, 30000);
+
+// Discord-tag kopiëren
+document.querySelectorAll('.discord-user').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const tag = el.textContent;
+    navigator.clipboard.writeText(tag).then(()=>alert(`Discord-tag "${tag}" is gekopieerd!`));
+  });
+});
+
+// Review
+const stars = document.querySelectorAll('#review .star');
+const yourRating = document.getElementById('yourRating');
+const reviewersList = document.getElementById('reviewersList');
+
+function updateStarsDisplay(rating){
+  stars.forEach(s=>{ s.classList.remove('selected'); if(parseInt(s.dataset.value)<=rating) s.classList.add('selected'); });
+  yourRating.textContent = 'Je beoordeling: ' + rating + ' ster' + (rating>1?'ren':'');
+}
+
+let savedRating = localStorage.getItem('rating') || 0;
+let reviewers = JSON.parse(localStorage.getItem('reviewers')||'[]');
+updateStarsDisplay(savedRating);
+reviewersList.innerHTML = reviewers.join('<br>');
+
+stars.forEach(star=>{
+  star.addEventListener('click',()=>{
+    let rating=parseInt(star.dataset.value);
+    updateStarsDisplay(rating);
+    localStorage.setItem('rating', rating);
+    if(!reviewers.includes('Jij')){ reviewers.push('Jij'); localStorage.setItem('reviewers',JSON.stringify(reviewers)); reviewersList.innerHTML=reviewers.join('<br>'); }
+  });
+  star.addEventListener('mouseover',()=>{
+    stars.forEach(s=>{ s.classList.remove('hover'); if(parseInt(s.dataset.value)<=parseInt(star.dataset.value)) s.classList.add('hover'); });
+  });
+  star.addEventListener('mouseout',()=>{ stars.forEach(s=>s.classList.remove('hover')); });
+});
+</script>
+
+</body>
+</html>

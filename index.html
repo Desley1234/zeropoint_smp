@@ -68,7 +68,7 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 120px;
+  padding-bottom: 160px;
 }
 
 section {
@@ -112,7 +112,7 @@ li {
   padding-left: 30px;
   margin-bottom: 10px;
   position: relative;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   line-height: 1.4;
 }
 li.correct::before {
@@ -188,14 +188,15 @@ a.button-link:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  justify-content: center;
-  text-align: center;
+  justify-content: flex-start;
+  text-align: left;
+  margin-top: 5px;
 }
 .players-list span {
   display: inline-block;
   margin: 0 5px 5px 0;
   padding: 2px 6px;
-  color: #fff;
+  color: #00ff00;
   background: none;
 }
 
@@ -204,7 +205,7 @@ a.button-link:hover {
   padding: 12px;
   border-radius: 8px;
   margin-top: 20px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-align: center;
   box-shadow: inset 0 0 10px #0008;
 }
@@ -239,96 +240,12 @@ a.button-link:hover {
   box-shadow: 0 6px 15px #ffeb3b80;
 }
 
-#tiktok-section {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 0;
-  gap: 5px;
-}
-
-#tiktok-section .title {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-#tiktok-section .links {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* Review sectie */
-#review .stars {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  font-size: 2rem;
-  margin-bottom: 5px;
-}
-#review .star {
-  color: white;
-  transition: 0.2s;
-}
-#review .star.hover,
-#review .star.selected {
-  color: #f1c40f;
-}
-#yourRating {
-  font-size: 1rem;
-  margin-top: 5px;
-  text-align: center;
-  color: #f1c40f; /* geel voor review */
-}
-#reviewersList {
-  text-align: center;
-  font-size: 0.85rem;
-  margin-top: 15px;
-  color: #f1c40f; /* geel voor alle reviews */
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-#reviewersList .reviewer {
-  margin-bottom: 10px;
-}
-#reviewersList .reviewer .name {
-  font-weight: bold;
-  margin-right: 8px;
-}
-#reviewersList .reviewer .stars {
-  font-size: 1.2rem;
-  vertical-align: middle;
-  color: #f1c40f;
-}
-
-#reviewNameInput {
-  display: block;
-  margin: 0 auto 10px auto;
-  font-family: 'Press Start 2P', cursive, monospace;
-  font-size: 1rem;
-  padding: 6px 10px;
-  width: 140px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  text-align: center;
-  letter-spacing: 1.5px;
-}
-
+/* Mobielvriendelijk */
 @media(max-width:480px){
     main, section { padding: 15px 20px; }
     header img { width: 90px; }
-    h2 { font-size: 0.9rem; }
-    li { font-size: 0.65rem; }
+    h2 { font-size: 1rem; }
+    li { font-size: 0.75rem; }
     .button-container { flex-direction: column; }
     button.copy, a.button-link { width: 100%; font-size: 0.75rem; padding: 12px; }
     nav button { padding: 8px 12px; font-size: 0.7rem; }
@@ -346,7 +263,6 @@ a.button-link:hover {
   <button onclick="showSection('home')">Home</button>
   <button onclick="showSection('informatie')">Informatie</button>
   <button onclick="showSection('media')">Media</button>
-  <button onclick="showSection('review')">Review</button>
 </nav>
 
 <main>
@@ -355,6 +271,7 @@ a.button-link:hover {
 <div class="info-box" id="serverStatus">
 <p>Status: <span id="statusText">Laden...</span></p>
 <p>Spelers: <span id="playersCount">0/20</span></p>
+<p>Server al online: <span id="serverUptime">Laden...</span></p>
 <div id="playersList" class="players-list"></div>
 <div class="button-container">
 <button class="copy" id="copyIpBtn">Copy server IP</button>
@@ -435,32 +352,15 @@ a.button-link:hover {
 <img src="images/boys.png" alt="ZeroPoint SMP Spelers" />
 <img src="images/arena.png" alt="ZeroPoint SMP Custom Arena" />
 </div>
-</section>
 
-<section id="review">
-<h2>⭐ Beoordeel ZeroPoint SMP ⭐</h2>
-<input id="reviewNameInput" maxlength="6" placeholder="Je naam (max 6 letters)" />
-<div class="stars" id="starsContainer">
-<span class="star" data-value="1">★</span>
-<span class="star" data-value="2">★</span>
-<span class="star" data-value="3">★</span>
-<span class="star" data-value="4">★</span>
-<span class="star" data-value="5">★</span>
-</div>
-<button id="submitReviewBtn" class="copy" style="margin-top:10px; width:160px;">Verstuur review</button>
-<div id="yourRating">Je beoordeling: nog niet gegeven</div>
-<div id="reviewersList"></div>
-</section>
-</main>
-
-<div id="tiktok-section">
-<div class="title">Volg ons op TikTok</div>
-<div class="links">
+<h2>Volg ons op TikTok</h2>
+<div class="button-container">
 <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link">Desley (@pannekoek17)</a>
 <a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
 <a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
 </div>
-</div>
+</section>
+</main>
 
 <script>
 // Secties wisselen
@@ -478,87 +378,72 @@ document.getElementById('copyIpBtnInfo').addEventListener('click', () => {
   navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
 });
 
-// Server status ophalen (omgekeerde logica)
+// Server status ophalen + online timer
+let serverStartTime = null;
+
 async function updateServerStatus() {
   const statusText = document.getElementById('statusText');
   const playersCount = document.getElementById('playersCount');
   const playersList = document.getElementById('playersList');
+  const uptimeElem = document.getElementById('serverUptime');
+
   try {
-    const res = await fetch('https://api.mcsrvstat.us/2/Mikeeeee1-9Mba.aternos.me');
+    const res = await fetch(`https://api.mcsrvstat.us/2/${serverIp}`);
     const data = await res.json();
-    if(data.online){
-      statusText.textContent = "Offline ❌";
-      playersCount.textContent = "0/20";
-      playersList.innerHTML = '';
-    } else {
+
+    const motdRaw = data.motd?.raw || [];
+    const isOffline = motdRaw.some(line => line.includes("§cThis server is offline"));
+
+    if (!isOffline && data.online) {
       statusText.textContent = "Online ✅";
-      playersCount.textContent = "0/20";
+      statusText.style.color = "#00ff00";
+      playersCount.textContent = `${data.players?.online || 0}/${data.players?.max || 20}`;
       playersList.innerHTML = '';
+      if (data.players?.list) {
+        data.players.list.forEach(player => {
+          const span = document.createElement('span');
+          span.textContent = player;
+          span.style.color = "#00ff00";
+          playersList.appendChild(span);
+        });
+      }
+
+      if (!serverStartTime) serverStartTime = new Date();
+
+    } else {
+      statusText.textContent = "Offline ❌";
+      statusText.style.color = "#ff0000";
+      playersCount.textContent = `0/20`;
+      playersList.innerHTML = '';
+      uptimeElem.textContent = "-";
+      serverStartTime = null;
     }
-  } catch(err){
-    statusText.textContent = "Offline ❌";
-    playersCount.textContent = "0/20";
+  } catch (err) {
+    statusText.textContent = "Fout bij laden ❌";
+    statusText.style.color = "#ff0000";
+    playersCount.textContent = `0/20`;
     playersList.innerHTML = '';
+    uptimeElem.textContent = "-";
+    serverStartTime = null;
   }
 }
+
+// Update online tijd elke seconde
+setInterval(() => {
+  if (serverStartTime) {
+    const now = new Date();
+    let diff = Math.floor((now - serverStartTime) / 1000);
+    const hours = Math.floor(diff / 3600);
+    diff %= 3600;
+    const minutes = Math.floor(diff / 60);
+    const seconds = diff % 60;
+    document.getElementById('serverUptime').textContent =
+      `${hours}h ${minutes}m ${seconds}s`;
+  }
+}, 1000);
+
 updateServerStatus();
-
-// Review systeem
-const stars = document.querySelectorAll('.star');
-const yourRating = document.getElementById('yourRating');
-let selectedRating = 0;
-stars.forEach(star => {
-  star.addEventListener('mouseover', () => {
-    stars.forEach(s => s.classList.remove('hover'));
-    for(let i=0;i<star.dataset.value;i++) stars[i].classList.add('hover');
-  });
-  star.addEventListener('mouseout', () => stars.forEach(s => s.classList.remove('hover')));
-  star.addEventListener('click', () => {
-    selectedRating = parseInt(star.dataset.value);
-    stars.forEach((s,i) => s.classList.toggle('selected', i < selectedRating));
-    yourRating.textContent = `Je beoordeling: ${selectedRating} sterren`;
-  });
-});
-
-const reviewersList = document.getElementById('reviewersList');
-const submitBtn = document.getElementById('submitReviewBtn');
-submitBtn.addEventListener('click', () => {
-  const nameInput = document.getElementById('reviewNameInput').value.trim();
-  if(!nameInput){
-    alert('Vul een naam in (max 6 letters)');
-    return;
-  }
-  if(nameInput.length>6){
-    alert('Naam mag maximaal 6 letters zijn');
-    return;
-  }
-  if(selectedRating===0){
-    alert('Kies eerst een rating!');
-    return;
-  }
-
-  // Check of naam al in localStorage zit
-  let reviewers = JSON.parse(localStorage.getItem('reviewers') || '[]');
-  if(reviewers.some(r => r.name.toLowerCase()===nameInput.toLowerCase())){
-    alert('Deze naam heeft al een review gegeven');
-    return;
-  }
-
-  reviewers.push({name:nameInput, rating:selectedRating});
-  localStorage.setItem('reviewers', JSON.stringify(reviewers));
-  displayReviews();
-});
-
-function displayReviews(){
-  let reviewers = JSON.parse(localStorage.getItem('reviewers') || '[]');
-  reviewersList.innerHTML = '';
-  reviewers.forEach(r=>{
-    let starsHtml = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
-    reviewersList.innerHTML += `<div class="reviewer"><span class="name">${r.name}:</span> <span class="stars">${starsHtml}</span></div>`;
-  });
-}
-
-displayReviews();
+setInterval(updateServerStatus, 30000);
 </script>
 
 </body>

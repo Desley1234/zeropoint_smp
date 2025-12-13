@@ -271,7 +271,6 @@ a.button-link:hover {
 <div class="info-box" id="serverStatus">
 <p>Status: <span id="statusText">Laden...</span></p>
 <p>Spelers: <span id="playersCount">0/20</span></p>
-<p>Server al online: <span id="serverUptime">Laden...</span></p>
 <div id="playersList" class="players-list"></div>
 <div class="button-container">
 <button class="copy" id="copyIpBtn">Copy server IP</button>
@@ -357,7 +356,7 @@ a.button-link:hover {
 <div class="button-container">
 <a href="https://www.tiktok.com/@pannekoek17" target="_blank" class="button-link">Desley (@pannekoek17)</a>
 <a href="https://www.tiktok.com/@mikecommunity10" target="_blank" class="button-link">Mike (@mikecommunity10)</a>
-<a href="https://www.tiktok.com/@maxw1129" target="_blank" class="button-link">ZeroPoint SMP (@maxw1129)</a>
+<a href="https://www.tiktok.com/@zeropointsmp" target="_blank" class="button-link">ZeroPoint SMP (@zeropointsmp)</a>
 </div>
 </section>
 </main>
@@ -378,23 +377,17 @@ document.getElementById('copyIpBtnInfo').addEventListener('click', () => {
   navigator.clipboard.writeText(serverIp).then(() => alert('Server IP gekopieerd: ' + serverIp));
 });
 
-// Server status ophalen + online timer
-let serverStartTime = null;
-
+// Server status ophalen
 async function updateServerStatus() {
   const statusText = document.getElementById('statusText');
   const playersCount = document.getElementById('playersCount');
   const playersList = document.getElementById('playersList');
-  const uptimeElem = document.getElementById('serverUptime');
 
   try {
     const res = await fetch(`https://api.mcsrvstat.us/2/${serverIp}`);
     const data = await res.json();
 
-    const motdRaw = data.motd?.raw || [];
-    const isOffline = motdRaw.some(line => line.includes("§cThis server is offline"));
-
-    if (!isOffline && data.online) {
+    if (data.online) {
       statusText.textContent = "Online ✅";
       statusText.style.color = "#00ff00";
       playersCount.textContent = `${data.players?.online || 0}/${data.players?.max || 20}`;
@@ -403,45 +396,23 @@ async function updateServerStatus() {
         data.players.list.forEach(player => {
           const span = document.createElement('span');
           span.textContent = player;
-          span.style.color = "#00ff00";
+          span.style.color = "#00ff00"; // groen online
           playersList.appendChild(span);
         });
       }
-
-      if (!serverStartTime) serverStartTime = new Date();
-
     } else {
       statusText.textContent = "Offline ❌";
       statusText.style.color = "#ff0000";
       playersCount.textContent = `0/20`;
       playersList.innerHTML = '';
-      uptimeElem.textContent = "-";
-      serverStartTime = null;
     }
   } catch (err) {
     statusText.textContent = "Fout bij laden ❌";
     statusText.style.color = "#ff0000";
     playersCount.textContent = `0/20`;
     playersList.innerHTML = '';
-    uptimeElem.textContent = "-";
-    serverStartTime = null;
   }
 }
-
-// Update online tijd elke seconde
-setInterval(() => {
-  if (serverStartTime) {
-    const now = new Date();
-    let diff = Math.floor((now - serverStartTime) / 1000);
-    const hours = Math.floor(diff / 3600);
-    diff %= 3600;
-    const minutes = Math.floor(diff / 60);
-    const seconds = diff % 60;
-    document.getElementById('serverUptime').textContent =
-      `${hours}h ${minutes}m ${seconds}s`;
-  }
-}, 1000);
-
 updateServerStatus();
 setInterval(updateServerStatus, 30000);
 </script>
